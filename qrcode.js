@@ -49,7 +49,7 @@ var qrcodegen;
         function QrCode(
         // The version number of this QR Code, which is between 1 and 40 (inclusive).
         // This determines the size of this barcode.
-        version, 
+        version,
         // The error correction level used in this QR Code.
         errorCorrectionLevel, dataCodewords, msk) {
             this.version = version;
@@ -658,11 +658,11 @@ var qrcodegen;
         // but the constraint isn't checked. The given bit buffer is cloned and stored.
         function QrSegment(
         // The mode indicator of this segment.
-        mode, 
+        mode,
         // The length of this segment's unencoded data. Measured in characters for
         // numeric/alphanumeric/kanji mode, bytes for byte mode, and 0 for ECI mode.
         // Always zero or positive. Not the same as the data's bit length.
-        numChars, 
+        numChars,
         // The data bits of this segment. Accessed through getData().
         bitData) {
             this.mode = mode;
@@ -812,7 +812,7 @@ var qrcodegen;
             /*-- Constructor and fields --*/
             function Ecc(
             // In the range 0 to 3 (unsigned 2-bit integer).
-            ordinal, 
+            ordinal,
             // (Package-private) In the range 0 to 3 (unsigned 2-bit integer).
             formatBits) {
                 this.ordinal = ordinal;
@@ -839,7 +839,7 @@ var qrcodegen;
             /*-- Constructor and fields --*/
             function Mode(
             // The mode indicator bits, which is a uint4 value (range 0 to 15).
-            modeBits, 
+            modeBits,
             // Number of character count bits for three different version ranges.
             numBitsCharCount) {
                 this.modeBits = modeBits;

@@ -526,34 +526,34 @@ body {
         gap: 1.5rem;
         padding: 1.5rem;
     }
-    
+
     .qr-type-navbar {
         flex-direction: column;
         gap: 4px;
     }
-    
+
     .type-btn {
         flex: none;
     }
-    
+
     .advanced-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .preset-buttons {
         justify-content: center;
     }
-    
+
     .qr-actions {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .action-btn {
         width: 100%;
         justify-content: center;
     }
-    
+
     .container {
         padding: 1rem;
     }
@@ -563,7 +563,7 @@ body {
     .container {
         padding: 0.5rem;
     }
-    
+
     .generator-section {
         padding: 1rem;
     }

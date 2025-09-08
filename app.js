@@ -13,34 +13,34 @@ class QRCodeGenerator {
         this.textInputGroup = document.getElementById('text-input-group');
         this.wifiInputGroup = document.getElementById('wifi-input-group');
         this.contactInputGroup = document.getElementById('contact-input-group');
-        
+
         // Text input elements
         this.textInput = document.getElementById('qr-text');
         this.clearBtn = document.getElementById('clear-btn');
         this.charCount = document.querySelector('.char-count');
-        
+
         // WiFi input elements
         this.wifiSsid = document.getElementById('wifi-ssid');
         this.wifiPassword = document.getElementById('wifi-password');
         this.wifiSecurity = document.getElementById('wifi-security');
         this.wifiHidden = document.getElementById('wifi-hidden');
-        
+
         // Contact input elements
         this.contactName = document.getElementById('contact-name');
         this.contactPhone = document.getElementById('contact-phone');
         this.contactEmail = document.getElementById('contact-email');
         this.contactCompany = document.getElementById('contact-company');
         this.contactWebsite = document.getElementById('contact-website');
-        
+
         // Style preset elements
         this.presetButtons = document.querySelectorAll('.preset-btn');
-        
+
         // Basic option elements
         this.sizeSlider = document.getElementById('qr-size');
         this.foregroundColorInput = document.getElementById('foreground-color');
         this.backgroundColorInput = document.getElementById('background-color');
         this.rangeValue = document.querySelector('.range-value');
-        
+
         // Advanced option elements
         this.advancedToggle = document.getElementById('advanced-toggle');
         this.advancedContent = document.getElementById('advanced-content');
@@ -51,12 +51,12 @@ class QRCodeGenerator {
         this.gradientColorGroup = document.getElementById('gradient-color-group');
         this.gradientColorInput = document.getElementById('gradient-color');
         this.logoOverlayInput = document.getElementById('logo-overlay');
-        
+
         // Background gradient elements
         this.bgGradientTypeSelect = document.getElementById('bg-gradient-type');
         this.bgGradientColorGroup = document.getElementById('bg-gradient-color-group');
         this.bgGradientColorInput = document.getElementById('bg-gradient-color');
-        
+
         // Logo option elements
         this.logoSizeGroup = document.getElementById('logo-size-group');
         this.logoOpacityGroup = document.getElementById('logo-opacity-group');
@@ -64,14 +64,14 @@ class QRCodeGenerator {
         this.logoSizeSlider = document.getElementById('logo-size');
         this.logoOpacitySlider = document.getElementById('logo-opacity');
         this.logoPositionSelect = document.getElementById('logo-position');
-        
+
         // Output elements
         this.qrContainer = document.getElementById('qr-container');
         this.qrActions = document.getElementById('qr-actions');
         this.downloadPngBtn = document.getElementById('download-png');
         this.downloadSvgBtn = document.getElementById('download-svg');
         this.copyBtn = document.getElementById('copy-qr');
-        
+
         // Logo overlay
         this.logoImage = null;
         this.currentQRType = 'text';
@@ -82,45 +82,45 @@ class QRCodeGenerator {
         this.typeButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.switchQRType(e.target.dataset.type));
         });
-        
+
         // Clear button
         this.clearBtn.addEventListener('click', () => this.clearInput());
-        
+
         // Character count update
         this.textInput.addEventListener('input', () => this.updateCharCount());
-        
+
         // Size slider
         this.sizeSlider.addEventListener('input', () => this.updateSizeDisplay());
-        
+
         // Border width slider
         this.borderWidthSlider.addEventListener('input', () => this.updateBorderWidthDisplay());
-        
+
         // Logo size and opacity sliders
         this.logoSizeSlider.addEventListener('input', () => this.updateLogoSizeDisplay());
         this.logoOpacitySlider.addEventListener('input', () => this.updateLogoOpacityDisplay());
-        
+
         // Gradient type changes
         this.gradientTypeSelect.addEventListener('change', () => this.toggleGradientColor());
         this.bgGradientTypeSelect.addEventListener('change', () => this.toggleBgGradientColor());
-        
+
         // Logo overlay
         this.logoOverlayInput.addEventListener('change', (e) => this.handleLogoUpload(e));
-        
+
         // Advanced toggle
         this.advancedToggle.addEventListener('click', () => this.toggleAdvanced());
-        
+
         // Preset buttons
         this.presetButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.applyPreset(e.target.dataset.preset));
         });
-        
+
         // Download buttons
         this.downloadPngBtn.addEventListener('click', () => this.downloadQRCode('png'));
         this.downloadSvgBtn.addEventListener('click', () => this.downloadQRCode('svg'));
-        
+
         // Copy button
         this.copyBtn.addEventListener('click', () => this.copyQRCode());
-        
+
         // Enter key to clear
         this.textInput.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
@@ -132,30 +132,30 @@ class QRCodeGenerator {
     setupAutoGeneration() {
         // Auto-generate QR code on any input change (with debounce)
         let timeout;
-        
+
         const generateWithDebounce = () => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 this.generateQRCode();
             }, 300);
         };
-        
+
         // Text input changes
         this.textInput.addEventListener('input', generateWithDebounce);
-        
+
         // WiFi input changes
         [this.wifiSsid, this.wifiPassword, this.wifiSecurity, this.wifiHidden].forEach(input => {
             input.addEventListener('input', generateWithDebounce);
             input.addEventListener('change', generateWithDebounce);
         });
-        
+
         // Contact input changes
         [this.contactName, this.contactPhone, this.contactEmail, this.contactCompany, this.contactWebsite].forEach(input => {
             input.addEventListener('input', generateWithDebounce);
         });
-        
+
         // Option changes
-        [this.errorCorrectionSelect, this.sizeSlider, this.foregroundColorInput, this.backgroundColorInput, 
+        [this.errorCorrectionSelect, this.sizeSlider, this.foregroundColorInput, this.backgroundColorInput,
          this.borderWidthSlider, this.moduleShapeSelect, this.gradientTypeSelect, this.gradientColorInput,
          this.bgGradientTypeSelect, this.bgGradientColorInput, this.logoSizeSlider, this.logoOpacitySlider,
          this.logoPositionSelect].forEach(input => {
@@ -202,16 +202,16 @@ class QRCodeGenerator {
 
     switchQRType(type) {
         this.currentQRType = type;
-        
+
         // Update active button
         this.typeButtons.forEach(btn => btn.classList.remove('active'));
         document.querySelector(`[data-type="${type}"]`).classList.add('active');
-        
+
         // Hide all input groups
         this.textInputGroup.style.display = 'none';
         this.wifiInputGroup.style.display = 'none';
         this.contactInputGroup.style.display = 'none';
-        
+
         // Show selected input group
         switch(type) {
             case 'text':
@@ -224,18 +224,18 @@ class QRCodeGenerator {
                 this.contactInputGroup.style.display = 'block';
                 break;
         }
-        
+
         this.generateQRCode();
     }
 
     applyPreset(presetName) {
         const preset = this.presets[presetName];
         if (!preset) return;
-        
+
         // Update active preset button
         this.presetButtons.forEach(btn => btn.classList.remove('active'));
         document.querySelector(`[data-preset="${presetName}"]`).classList.add('active');
-        
+
         // Apply preset values
         this.foregroundColorInput.value = preset.foreground;
         this.backgroundColorInput.value = preset.background;
@@ -245,13 +245,13 @@ class QRCodeGenerator {
         this.moduleShapeSelect.value = preset.moduleShape;
         this.gradientTypeSelect.value = preset.gradientType;
         this.errorCorrectionSelect.value = preset.errorCorrection;
-        
+
         // Update displays
         this.updateSizeDisplay();
         this.updateBorderWidthDisplay();
         this.toggleGradientColor();
         this.toggleBgGradientColor();
-        
+
         this.generateQRCode();
     }
 
@@ -303,7 +303,7 @@ class QRCodeGenerator {
     updateCharCount() {
         const count = this.textInput.value.length;
         this.charCount.textContent = `${count} characters`;
-        
+
         // Update character count color based on length
         if (count > 1000) {
             this.charCount.style.color = 'var(--error-color)';
@@ -363,7 +363,7 @@ class QRCodeGenerator {
                 this.contactWebsite.value = '';
                 break;
         }
-        
+
         this.clearQRCode();
     }
 
@@ -379,7 +379,7 @@ class QRCodeGenerator {
 
     generateQRCode() {
         let text = '';
-        
+
         // Generate text based on type
         switch(this.currentQRType) {
             case 'text':
@@ -392,7 +392,7 @@ class QRCodeGenerator {
                 text = this.generateContactString();
                 break;
         }
-        
+
         if (!text) {
             this.clearQRCode();
             return;
@@ -401,7 +401,7 @@ class QRCodeGenerator {
         try {
             // Show loading state
             this.showLoading();
-            
+
             // Get options
             const errorCorrection = this.getErrorCorrectionLevel();
             const size = parseInt(this.sizeSlider.value);
@@ -413,16 +413,16 @@ class QRCodeGenerator {
             const gradientColor = this.gradientColorInput.value;
             const bgGradientType = this.bgGradientTypeSelect.value;
             const bgGradientColor = this.bgGradientColorInput.value;
-            
+
             // Generate QR code using the library
             const qr = qrcodegen.QrCode.encodeText(text, errorCorrection);
-            
+
             // Create SVG with advanced styling
             const svg = this.createAdvancedSVG(qr, size, foregroundColor, backgroundColor, borderWidth, moduleShape, gradientType, gradientColor, bgGradientType, bgGradientColor);
-            
+
             // Display QR code
             this.displayQRCode(svg);
-            
+
         } catch (error) {
             this.showError('Failed to generate QR code: ' + error.message);
         }
@@ -433,19 +433,19 @@ class QRCodeGenerator {
         const password = this.wifiPassword.value;
         const security = this.wifiSecurity.value;
         const hidden = this.wifiHidden.checked;
-        
+
         if (!ssid) return '';
-        
+
         let wifiString = `WIFI:T:${security};S:${ssid};`;
-        
+
         if (password && security !== 'nopass') {
             wifiString += `P:${password};`;
         }
-        
+
         if (hidden) {
             wifiString += 'H:true;';
         }
-        
+
         wifiString += ';';
         return wifiString;
     }
@@ -456,17 +456,17 @@ class QRCodeGenerator {
         const email = this.contactEmail.value.trim();
         const company = this.contactCompany.value.trim();
         const website = this.contactWebsite.value.trim();
-        
+
         if (!name && !phone && !email) return '';
-        
+
         let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
-        
+
         if (name) vcard += `FN:${name}\n`;
         if (phone) vcard += `TEL:${phone}\n`;
         if (email) vcard += `EMAIL:${email}\n`;
         if (company) vcard += `ORG:${company}\n`;
         if (website) vcard += `URL:${website}\n`;
-        
+
         vcard += 'END:VCARD';
         return vcard;
     }
@@ -480,14 +480,14 @@ class QRCodeGenerator {
         const modulesPerSide = qr.size;
         const totalSize = modulesPerSide + borderWidth * 2;
         const moduleSize = size / totalSize;
-        
+
         let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${totalSize} ${totalSize}">`;
-        
+
         // Define gradients
         const gradients = [];
         if (gradientType !== 'none' || bgGradientType !== 'none') {
             svg += `<defs>`;
-            
+
             // Foreground gradient
             if (gradientType !== 'none') {
                 const fgGradientId = `fg-gradient-${Date.now()}`;
@@ -501,7 +501,7 @@ class QRCodeGenerator {
                 svg += `<stop offset="100%" style="stop-color:${gradientColor};stop-opacity:1" />`;
                 svg += `</${gradientType === 'linear' ? 'linearGradient' : 'radialGradient'}>`;
             }
-            
+
             // Background gradient
             if (bgGradientType !== 'none') {
                 const bgGradientId = `bg-gradient-${Date.now()}`;
@@ -515,27 +515,27 @@ class QRCodeGenerator {
                 svg += `<stop offset="100%" style="stop-color:${bgGradientColor};stop-opacity:1" />`;
                 svg += `</${bgGradientType === 'linear' ? 'linearGradient' : 'radialGradient'}>`;
             }
-            
+
             svg += `</defs>`;
         }
-        
+
         // Background
         const bgFill = bgGradientType !== 'none' ? `url(#bg-gradient-${Date.now()})` : backgroundColor;
         svg += `<rect width="${totalSize}" height="${totalSize}" fill="${bgFill}"/>`;
-        
+
         // Foreground color with gradient
         const fgFill = gradientType !== 'none' ? `url(#fg-gradient-${Date.now()})` : foregroundColor;
-        
+
         // Draw modules with different shapes
         for (let y = 0; y < modulesPerSide; y++) {
             for (let x = 0; x < modulesPerSide; x++) {
                 if (qr.getModule(x, y)) {
                     const rectX = x + borderWidth;
                     const rectY = y + borderWidth;
-                    
+
                     // Check if this module is part of critical patterns that must remain square
                     const isCriticalPattern = this.isCriticalPattern(x, y, modulesPerSide);
-                    
+
                     // Use custom shapes only for data modules, keep critical patterns as squares
                     if (isCriticalPattern || moduleShape === 'square') {
                         svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}"/>`;
@@ -565,13 +565,13 @@ class QRCodeGenerator {
                 }
             }
         }
-        
+
         // Add logo overlay if present
         if (this.logoImage) {
             const logoSize = Math.max(4, Math.floor(modulesPerSide * (parseInt(this.logoSizeSlider.value) / 100)));
             const logoOpacity = parseInt(this.logoOpacitySlider.value) / 100;
             const logoPosition = this.logoPositionSelect.value;
-            
+
             let logoX, logoY;
             switch(logoPosition) {
                 case 'top-left':
@@ -594,10 +594,10 @@ class QRCodeGenerator {
                     logoX = (totalSize - logoSize) / 2;
                     logoY = (totalSize - logoSize) / 2;
             }
-            
+
             svg += `<image x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}" href="${this.logoImage}" preserveAspectRatio="xMidYMid meet" opacity="${logoOpacity}"/>`;
         }
-        
+
         svg += '</svg>';
         return svg;
     }
@@ -630,13 +630,13 @@ class QRCodeGenerator {
         // Finder patterns are 7x7 modules in the three corners
         // Top-left finder pattern (0,0 to 6,6)
         if (x <= 6 && y <= 6) return true;
-        
+
         // Top-right finder pattern
         if (x >= size - 7 && y <= 6) return true;
-        
+
         // Bottom-left finder pattern
         if (x <= 6 && y >= size - 7) return true;
-        
+
         return false;
     }
 
@@ -682,7 +682,7 @@ class QRCodeGenerator {
         const svgData = new XMLSerializer().serializeToString(svg);
         const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
         const svgUrl = URL.createObjectURL(svgBlob);
-        
+
         const downloadLink = document.createElement('a');
         downloadLink.href = svgUrl;
         downloadLink.download = `qrcode-${Date.now()}.svg`;
@@ -696,20 +696,20 @@ class QRCodeGenerator {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const size = parseInt(this.sizeSlider.value);
-        
+
         canvas.width = size;
         canvas.height = size;
-        
+
         const img = new Image();
         const svgData = new XMLSerializer().serializeToString(svg);
         const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
         const svgUrl = URL.createObjectURL(svgBlob);
-        
+
         img.onload = () => {
             ctx.fillStyle = this.backgroundColorInput.value;
             ctx.fillRect(0, 0, size, size);
             ctx.drawImage(img, 0, 0, size, size);
-            
+
             canvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
                 const downloadLink = document.createElement('a');
@@ -722,7 +722,7 @@ class QRCodeGenerator {
                 URL.revokeObjectURL(svgUrl);
             });
         };
-        
+
         img.src = svgUrl;
     }
 
@@ -738,20 +738,20 @@ class QRCodeGenerator {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const size = parseInt(this.sizeSlider.value);
-            
+
             canvas.width = size;
             canvas.height = size;
-            
+
             const img = new Image();
             const svgData = new XMLSerializer().serializeToString(svg);
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
             const svgUrl = URL.createObjectURL(svgBlob);
-            
+
             img.onload = () => {
                 ctx.fillStyle = this.backgroundColorInput.value;
                 ctx.fillRect(0, 0, size, size);
                 ctx.drawImage(img, 0, 0, size, size);
-                
+
                 canvas.toBlob(async (blob) => {
                     try {
                         await navigator.clipboard.write([
@@ -764,7 +764,7 @@ class QRCodeGenerator {
                     URL.revokeObjectURL(svgUrl);
                 });
             };
-            
+
             img.src = svgUrl;
         } catch (error) {
             this.showError('Copy to clipboard not supported in this browser');
@@ -775,7 +775,7 @@ class QRCodeGenerator {
         const originalText = this.copyBtn.innerHTML;
         this.copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
         this.copyBtn.style.background = 'var(--success-color)';
-        
+
         setTimeout(() => {
             this.copyBtn.innerHTML = originalText;
             this.copyBtn.style.background = 'var(--accent-color)';
