@@ -148,6 +148,48 @@ body {
     background: rgba(239, 68, 68, 0.1);
 }
 
+/* QR Type Navbar */
+.qr-type-navbar {
+    display: flex;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 4px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.type-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.type-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.type-btn.active {
+    background: var(--accent-color);
+    color: white;
+    box-shadow: var(--shadow);
+}
+
+.type-btn i {
+    font-size: 0.8rem;
+}
+
 /* Form rows for WiFi and Contact forms */
 .form-row {
     display: flex;
@@ -214,12 +256,7 @@ body {
     color: white;
 }
 
-/* Options section */
-.options-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-}
+/* Options section - removed since moved to advanced */
 
 /* Advanced Options */
 .advanced-section {
@@ -281,7 +318,7 @@ body {
 
 .advanced-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
 }
 
@@ -490,8 +527,13 @@ body {
         padding: 1.5rem;
     }
     
-    .options-section {
-        grid-template-columns: 1fr;
+    .qr-type-navbar {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .type-btn {
+        flex: none;
     }
     
     .advanced-grid {

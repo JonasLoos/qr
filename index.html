@@ -13,16 +13,20 @@
         <main class="main-content">
             <div class="generator-section">
                 <div class="input-section">
-                    <!-- QR Type Selector -->
-                    <div class="input-group">
-                        <label for="qr-type" class="input-label">
-                            QR Code Type
-                        </label>
-                        <select id="qr-type" class="select-input">
-                            <option value="text">Text / URL</option>
-                            <option value="wifi">WiFi Network</option>
-                            <option value="contact">Contact Information</option>
-                        </select>
+                    <!-- QR Type Navbar -->
+                    <div class="qr-type-navbar">
+                        <button class="type-btn active" data-type="text">
+                            <i class="fas fa-font"></i>
+                            Text / URL
+                        </button>
+                        <button class="type-btn" data-type="wifi">
+                            <i class="fas fa-wifi"></i>
+                            WiFi
+                        </button>
+                        <button class="type-btn" data-type="contact">
+                            <i class="fas fa-address-card"></i>
+                            Contact
+                        </button>
                     </div>
 
                     <!-- Text Input (default) -->
@@ -103,35 +107,9 @@
                     <div class="input-group">
                         <label class="input-label">Style Presets</label>
                         <div class="preset-buttons">
-                            <button class="preset-btn active" data-preset="default">Default</button>
-                            <button class="preset-btn" data-preset="minimal">Minimal</button>
-                            <button class="preset-btn" data-preset="colorful">Colorful</button>
+                            <button class="preset-btn active" data-preset="light">Light</button>
                             <button class="preset-btn" data-preset="dark">Dark</button>
-                        </div>
-                    </div>
-
-                    <!-- Basic Options (always visible) -->
-                    <div class="options-section">
-                        <div class="option-group">
-                            <label for="qr-size" class="option-label">
-                                Size
-                            </label>
-                            <input type="range" id="qr-size" class="range-input" min="200" max="800" value="400">
-                            <div class="range-value">400px</div>
-                        </div>
-
-                        <div class="option-group">
-                            <label for="foreground-color" class="option-label">
-                                Foreground
-                            </label>
-                            <input type="color" id="foreground-color" class="color-input" value="#000000">
-                        </div>
-
-                        <div class="option-group">
-                            <label for="background-color" class="option-label">
-                                Background
-                            </label>
-                            <input type="color" id="background-color" class="color-input" value="#ffffff">
+                            <button class="preset-btn" data-preset="blue">Blue</button>
                         </div>
                     </div>
 
@@ -145,6 +123,48 @@
                         
                         <div class="advanced-content" id="advanced-content" style="display: none;">
                             <div class="advanced-grid">
+                                <!-- Basic Options -->
+                                <div class="option-group">
+                                    <label for="qr-size" class="option-label">
+                                        Size
+                                    </label>
+                                    <input type="range" id="qr-size" class="range-input" min="200" max="800" value="400">
+                                    <div class="range-value">400px</div>
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="foreground-color" class="option-label">
+                                        Foreground
+                                    </label>
+                                    <input type="color" id="foreground-color" class="color-input" value="#000000">
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="background-color" class="option-label">
+                                        Background
+                                    </label>
+                                    <input type="color" id="background-color" class="color-input" value="#ffffff">
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="bg-gradient-type" class="option-label">
+                                        Background Gradient
+                                    </label>
+                                    <select id="bg-gradient-type" class="select-input">
+                                        <option value="none">None</option>
+                                        <option value="linear">Linear</option>
+                                        <option value="radial">Radial</option>
+                                    </select>
+                                </div>
+
+                                <div class="option-group" id="bg-gradient-color-group" style="display: none;">
+                                    <label for="bg-gradient-color" class="option-label">
+                                        Gradient Color
+                                    </label>
+                                    <input type="color" id="bg-gradient-color" class="color-input" value="#e0e7ff">
+                                </div>
+
+                                <!-- Advanced Options -->
                                 <div class="option-group">
                                     <label for="error-correction" class="option-label">
                                         Error Correction
@@ -173,12 +193,15 @@
                                         <option value="square">Square</option>
                                         <option value="rounded">Rounded</option>
                                         <option value="circle">Circle</option>
+                                        <option value="diamond">Diamond</option>
+                                        <option value="hexagon">Hexagon</option>
+                                        <option value="star">Star</option>
                                     </select>
                                 </div>
 
                                 <div class="option-group">
                                     <label for="gradient-type" class="option-label">
-                                        Gradient
+                                        Foreground Gradient
                                     </label>
                                     <select id="gradient-type" class="select-input">
                                         <option value="none">None</option>
@@ -194,11 +217,41 @@
                                     <input type="color" id="gradient-color" class="color-input" value="#ff6b6b">
                                 </div>
 
+                                <!-- Logo Options -->
                                 <div class="option-group">
                                     <label for="logo-overlay" class="option-label">
                                         Logo Overlay
                                     </label>
                                     <input type="file" id="logo-overlay" class="file-input" accept="image/*">
+                                </div>
+
+                                <div class="option-group" id="logo-size-group" style="display: none;">
+                                    <label for="logo-size" class="option-label">
+                                        Logo Size
+                                    </label>
+                                    <input type="range" id="logo-size" class="range-input" min="10" max="40" value="20">
+                                    <div class="range-value">20%</div>
+                                </div>
+
+                                <div class="option-group" id="logo-opacity-group" style="display: none;">
+                                    <label for="logo-opacity" class="option-label">
+                                        Logo Opacity
+                                    </label>
+                                    <input type="range" id="logo-opacity" class="range-input" min="0" max="100" value="100">
+                                    <div class="range-value">100%</div>
+                                </div>
+
+                                <div class="option-group" id="logo-position-group" style="display: none;">
+                                    <label for="logo-position" class="option-label">
+                                        Logo Position
+                                    </label>
+                                    <select id="logo-position" class="select-input">
+                                        <option value="center">Center</option>
+                                        <option value="top-left">Top Left</option>
+                                        <option value="top-right">Top Right</option>
+                                        <option value="bottom-left">Bottom Left</option>
+                                        <option value="bottom-right">Bottom Right</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
