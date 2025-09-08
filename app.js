@@ -533,26 +533,34 @@ class QRCodeGenerator {
                     const rectX = x + borderWidth;
                     const rectY = y + borderWidth;
                     
-                    switch(moduleShape) {
-                        case 'circle':
-                            svg += `<circle cx="${rectX + 0.5}" cy="${rectY + 0.5}" r="0.4" fill="${fgFill}"/>`;
-                            break;
-                        case 'rounded':
-                            svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}" rx="0.2" ry="0.2"/>`;
-                            break;
-                        case 'diamond':
-                            svg += `<polygon points="${rectX + 0.5},${rectY} ${rectX + 1},${rectY + 0.5} ${rectX + 0.5},${rectY + 1} ${rectX},${rectY + 0.5}" fill="${fgFill}"/>`;
-                            break;
-                        case 'hexagon':
-                            const hexPoints = this.getHexagonPoints(rectX + 0.5, rectY + 0.5, 0.4);
-                            svg += `<polygon points="${hexPoints}" fill="${fgFill}"/>`;
-                            break;
-                        case 'star':
-                            const starPoints = this.getStarPoints(rectX + 0.5, rectY + 0.5, 0.4);
-                            svg += `<polygon points="${starPoints}" fill="${fgFill}"/>`;
-                            break;
-                        default: // square
-                            svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}"/>`;
+                    // Check if this module is part of critical patterns that must remain square
+                    const isCriticalPattern = this.isCriticalPattern(x, y, modulesPerSide);
+                    
+                    // Use custom shapes only for data modules, keep critical patterns as squares
+                    if (isCriticalPattern || moduleShape === 'square') {
+                        svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}"/>`;
+                    } else {
+                        switch(moduleShape) {
+                            case 'circle':
+                                svg += `<circle cx="${rectX + 0.5}" cy="${rectY + 0.5}" r="0.45" fill="${fgFill}"/>`;
+                                break;
+                            case 'rounded':
+                                svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}" rx="0.2" ry="0.2"/>`;
+                                break;
+                            case 'diamond':
+                                svg += `<polygon points="${rectX + 0.5},${rectY + 0.1} ${rectX + 0.9},${rectY + 0.5} ${rectX + 0.5},${rectY + 0.9} ${rectX + 0.1},${rectY + 0.5}" fill="${fgFill}"/>`;
+                                break;
+                            case 'hexagon':
+                                const hexPoints = this.getHexagonPoints(rectX + 0.5, rectY + 0.5, 0.45);
+                                svg += `<polygon points="${hexPoints}" fill="${fgFill}"/>`;
+                                break;
+                            case 'star':
+                                const starPoints = this.getStarPoints(rectX + 0.5, rectY + 0.5, 0.45);
+                                svg += `<polygon points="${starPoints}" fill="${fgFill}"/>`;
+                                break;
+                            default: // square
+                                svg += `<rect x="${rectX}" y="${rectY}" width="1" height="1" fill="${fgFill}"/>`;
+                        }
                     }
                 }
             }
@@ -616,6 +624,20 @@ class QRCodeGenerator {
             points.push(`${x},${y}`);
         }
         return points.join(' ');
+    }
+
+    isCriticalPattern(x, y, size) {
+        // Finder patterns are 7x7 modules in the three corners
+        // Top-left finder pattern (0,0 to 6,6)
+        if (x <= 6 && y <= 6) return true;
+        
+        // Top-right finder pattern
+        if (x >= size - 7 && y <= 6) return true;
+        
+        // Bottom-left finder pattern
+        if (x <= 6 && y >= size - 7) return true;
+        
+        return false;
     }
 
     displayQRCode(svg) {
