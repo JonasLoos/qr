@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <div class="generator-section">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="qr-text" class="input-label">
+                            Enter text or URL
+                        </label>
+                        <textarea 
+                            id="qr-text" 
+                            class="text-input" 
+                            placeholder="Enter your text, URL, or any data you want to encode..."
+                            rows="3"
+                        ></textarea>
+                        <div class="input-footer">
+                            <span class="char-count">0 characters</span>
+                            <button class="clear-btn" id="clear-btn">
+                                <i class="fas fa-times"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label for="error-correction" class="option-label">
+                                Error Correction
+                            </label>
+                            <select id="error-correction" class="select-input">
+                                <option value="LOW">Low (7%)</option>
+                                <option value="MEDIUM" selected>Medium (15%)</option>
+                                <option value="QUARTILE">Quartile (25%)</option>
+                                <option value="HIGH">High (30%)</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="qr-size" class="option-label">
+                                Size
+                            </label>
+                            <input type="range" id="qr-size" class="range-input" min="200" max="800" value="400">
+                            <div class="range-value">400px</div>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="foreground-color" class="option-label">
+                                Foreground
+                            </label>
+                            <input type="color" id="foreground-color" class="color-input" value="#000000">
+                        </div>
+
+                        <div class="option-group">
+                            <label for="background-color" class="option-label">
+                                Background
+                            </label>
+                            <input type="color" id="background-color" class="color-input" value="#ffffff">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="qr-container" id="qr-container">
+                        <div class="qr-placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p>Your QR code will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="qr-actions" id="qr-actions" style="display: none;">
+                        <button class="action-btn download-btn" id="download-png">
+                            <i class="fas fa-download"></i>
+                            PNG
+                        </button>
+                        <button class="action-btn download-btn" id="download-svg">
+                            <i class="fas fa-download"></i>
+                            SVG
+                        </button>
+                        <button class="action-btn copy-btn" id="copy-qr">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="qrcode.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
