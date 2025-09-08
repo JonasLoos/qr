@@ -1,10 +1,6 @@
-# QR Code Generator Web App
+# QR Code Generator
 
 A simple web application for generating QR codes.
-
-## License
-
-This project uses the Nayuki QR Code Generator Library, which is licensed under the MIT License.
 
 ## How to use
 
@@ -16,3 +12,8 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000` in your browser.
+
+
+## License
+
+This project is licensed under the MIT License. It uses the Nayuki QR Code Generator Library, which is licensed under the MIT License.
