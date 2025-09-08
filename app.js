@@ -423,12 +423,6 @@ class QRCodeGenerator {
             // Display QR code
             this.displayQRCode(svg);
             
-            // Show success animation
-            this.qrContainer.classList.add('success-animation');
-            setTimeout(() => {
-                this.qrContainer.classList.remove('success-animation');
-            }, 600);
-            
         } catch (error) {
             this.showError('Failed to generate QR code: ' + error.message);
         }
@@ -593,7 +587,6 @@ class QRCodeGenerator {
                     logoY = (totalSize - logoSize) / 2;
             }
             
-            svg += `<rect x="${logoX - 1}" y="${logoY - 1}" width="${logoSize + 2}" height="${logoSize + 2}" fill="${backgroundColor}" rx="2" ry="2"/>`;
             svg += `<image x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}" href="${this.logoImage}" preserveAspectRatio="xMidYMid meet" opacity="${logoOpacity}"/>`;
         }
         
