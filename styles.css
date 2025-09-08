@@ -148,11 +148,176 @@ body {
     background: rgba(239, 68, 68, 0.1);
 }
 
+/* Form rows for WiFi and Contact forms */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+.wifi-form, .contact-form {
+    padding: 1rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-color);
+}
+
+/* Style Presets */
+.preset-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preset-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.preset-btn.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
 /* Options section */
 .options-section {
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Advanced Options */
+.advanced-section {
+    margin-top: 1rem;
+}
+
+.advanced-toggle {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.advanced-toggle:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.advanced-toggle i:first-child {
+    margin-right: 0.5rem;
+}
+
+.advanced-toggle i:last-child {
+    transition: transform 0.3s ease;
+}
+
+.advanced-toggle.expanded i:last-child {
+    transform: rotate(180deg);
+}
+
+.advanced-content {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.advanced-grid {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+}
+
+.file-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.file-input::-webkit-file-upload-button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    margin-right: 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.file-input::-webkit-file-upload-button:hover {
+    background: var(--accent-hover);
 }
 
 .option-group {
@@ -327,6 +492,14 @@ body {
     
     .options-section {
         grid-template-columns: 1fr;
+    }
+    
+    .advanced-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .preset-buttons {
+        justify-content: center;
     }
     
     .qr-actions {

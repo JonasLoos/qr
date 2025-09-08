@@ -13,7 +13,20 @@
         <main class="main-content">
             <div class="generator-section">
                 <div class="input-section">
+                    <!-- QR Type Selector -->
                     <div class="input-group">
+                        <label for="qr-type" class="input-label">
+                            QR Code Type
+                        </label>
+                        <select id="qr-type" class="select-input">
+                            <option value="text">Text / URL</option>
+                            <option value="wifi">WiFi Network</option>
+                            <option value="contact">Contact Information</option>
+                        </select>
+                    </div>
+
+                    <!-- Text Input (default) -->
+                    <div class="input-group" id="text-input-group">
                         <label for="qr-text" class="input-label">
                             Enter text or URL
                         </label>
@@ -32,19 +45,73 @@
                         </div>
                     </div>
 
-                    <div class="options-section">
-                        <div class="option-group">
-                            <label for="error-correction" class="option-label">
-                                Error Correction
-                            </label>
-                            <select id="error-correction" class="select-input">
-                                <option value="LOW">Low (7%)</option>
-                                <option value="MEDIUM" selected>Medium (15%)</option>
-                                <option value="QUARTILE">Quartile (25%)</option>
-                                <option value="HIGH">High (30%)</option>
-                            </select>
+                    <!-- WiFi Input -->
+                    <div class="input-group" id="wifi-input-group" style="display: none;">
+                        <div class="wifi-form">
+                            <div class="form-row">
+                                <label for="wifi-ssid" class="input-label">Network Name (SSID)</label>
+                                <input type="text" id="wifi-ssid" class="text-input" placeholder="MyWiFiNetwork">
+                            </div>
+                            <div class="form-row">
+                                <label for="wifi-password" class="input-label">Password</label>
+                                <input type="password" id="wifi-password" class="text-input" placeholder="password123">
+                            </div>
+                            <div class="form-row">
+                                <label for="wifi-security" class="input-label">Security Type</label>
+                                <select id="wifi-security" class="select-input">
+                                    <option value="WPA">WPA/WPA2</option>
+                                    <option value="WEP">WEP</option>
+                                    <option value="nopass">No Password</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label for="wifi-hidden" class="checkbox-label">
+                                    <input type="checkbox" id="wifi-hidden">
+                                    Hidden Network
+                                </label>
+                            </div>
                         </div>
+                    </div>
 
+                    <!-- Contact Input -->
+                    <div class="input-group" id="contact-input-group" style="display: none;">
+                        <div class="contact-form">
+                            <div class="form-row">
+                                <label for="contact-name" class="input-label">Full Name</label>
+                                <input type="text" id="contact-name" class="text-input" placeholder="John Doe">
+                            </div>
+                            <div class="form-row">
+                                <label for="contact-phone" class="input-label">Phone Number</label>
+                                <input type="tel" id="contact-phone" class="text-input" placeholder="+1 (555) 123-4567">
+                            </div>
+                            <div class="form-row">
+                                <label for="contact-email" class="input-label">Email</label>
+                                <input type="email" id="contact-email" class="text-input" placeholder="john@example.com">
+                            </div>
+                            <div class="form-row">
+                                <label for="contact-company" class="input-label">Company</label>
+                                <input type="text" id="contact-company" class="text-input" placeholder="Acme Corp">
+                            </div>
+                            <div class="form-row">
+                                <label for="contact-website" class="input-label">Website</label>
+                                <input type="url" id="contact-website" class="text-input" placeholder="https://example.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Style Presets -->
+                    <div class="input-group">
+                        <label class="input-label">Style Presets</label>
+                        <div class="preset-buttons">
+                            <button class="preset-btn active" data-preset="default">Default</button>
+                            <button class="preset-btn" data-preset="minimal">Minimal</button>
+                            <button class="preset-btn" data-preset="colorful">Colorful</button>
+                            <button class="preset-btn" data-preset="dark">Dark</button>
+                        </div>
+                    </div>
+
+                    <!-- Basic Options (always visible) -->
+                    <div class="options-section">
                         <div class="option-group">
                             <label for="qr-size" class="option-label">
                                 Size
@@ -65,6 +132,75 @@
                                 Background
                             </label>
                             <input type="color" id="background-color" class="color-input" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options (collapsible) -->
+                    <div class="advanced-section">
+                        <button class="advanced-toggle" id="advanced-toggle">
+                            <i class="fas fa-cog"></i>
+                            Advanced Options
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        
+                        <div class="advanced-content" id="advanced-content" style="display: none;">
+                            <div class="advanced-grid">
+                                <div class="option-group">
+                                    <label for="error-correction" class="option-label">
+                                        Error Correction
+                                    </label>
+                                    <select id="error-correction" class="select-input">
+                                        <option value="LOW">Low (7%)</option>
+                                        <option value="MEDIUM" selected>Medium (15%)</option>
+                                        <option value="QUARTILE">Quartile (25%)</option>
+                                        <option value="HIGH">High (30%)</option>
+                                    </select>
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="border-width" class="option-label">
+                                        Border Width
+                                    </label>
+                                    <input type="range" id="border-width" class="range-input" min="0" max="20" value="4">
+                                    <div class="range-value">4px</div>
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="module-shape" class="option-label">
+                                        Module Shape
+                                    </label>
+                                    <select id="module-shape" class="select-input">
+                                        <option value="square">Square</option>
+                                        <option value="rounded">Rounded</option>
+                                        <option value="circle">Circle</option>
+                                    </select>
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="gradient-type" class="option-label">
+                                        Gradient
+                                    </label>
+                                    <select id="gradient-type" class="select-input">
+                                        <option value="none">None</option>
+                                        <option value="linear">Linear</option>
+                                        <option value="radial">Radial</option>
+                                    </select>
+                                </div>
+
+                                <div class="option-group" id="gradient-color-group" style="display: none;">
+                                    <label for="gradient-color" class="option-label">
+                                        Gradient Color
+                                    </label>
+                                    <input type="color" id="gradient-color" class="color-input" value="#ff6b6b">
+                                </div>
+
+                                <div class="option-group">
+                                    <label for="logo-overlay" class="option-label">
+                                        Logo Overlay
+                                    </label>
+                                    <input type="file" id="logo-overlay" class="file-input" accept="image/*">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
