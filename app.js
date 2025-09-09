@@ -759,7 +759,7 @@ class QRCodeGenerator {
                         ]);
                         this.showCopySuccess();
                     } catch (error) {
-                        this.showError('Failed to copy QR code to clipboard');
+                        this.showCopyError('Failed to copy QR code to clipboard');
                     }
                     URL.revokeObjectURL(svgUrl);
                 });
@@ -767,7 +767,7 @@ class QRCodeGenerator {
 
             img.src = svgUrl;
         } catch (error) {
-            this.showError('Copy to clipboard not supported in this browser');
+            this.showCopyError('Copy to clipboard not supported in this browser');
         }
     }
 
@@ -780,6 +780,17 @@ class QRCodeGenerator {
             this.copyBtn.innerHTML = originalText;
             this.copyBtn.style.background = 'var(--accent-color)';
         }, 2000);
+    }
+
+    showCopyError(message) {
+        const originalText = this.copyBtn.innerHTML;
+        this.copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+        this.copyBtn.style.background = 'var(--error-color)';
+
+        setTimeout(() => {
+            this.copyBtn.innerHTML = originalText;
+            this.copyBtn.style.background = 'var(--accent-color)';
+        }, 3000);
     }
 }
 
