@@ -7,7 +7,7 @@ permissions:
   id-token: write
 jobs:
   deploy:
-    uses: JonasLoos/deployer/.github/workflows/deploy.yml@v1
+    uses: JonasLoos/deployer-workflow/.github/workflows/deploy.yml@v1
     with:
       domain: qr.jloos.de
       healthcheck: /
